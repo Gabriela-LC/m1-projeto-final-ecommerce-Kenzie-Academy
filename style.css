@@ -120,7 +120,7 @@ p.valor{
 }
 
 .btAdicionar{
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: #828282;
     background-color: white;
@@ -166,7 +166,7 @@ input{
     margin-right: 8px;
     background-color: #F5F5F5;
     padding: 15px;
-    border: none;
+    border: transparent solid 2px;
 }
 
 input:hover, input:focus{

@@ -1,40 +1,40 @@
 const bancoProdutos = [{
-    imgScr: "imagens/jaqueta.png",
+    imgSrc: "imagens/jaqueta.png",
     imgAlt: "Jaqueta Preta",
     categ: "Camisetas",
     nome: "Lightweight Jacket",
     descr: "Adicione um pouco de energia ao seu guarda-roupa de inverno com esta jaqueta vibrante...",
     preço: 200.00,
 },{
-    imgScr: "imagens/gorro.png",
+    imgSrc: "imagens/gorro.png",
     imgAlt: "Gorro Preto",
     categ: "Acessórios",
     nome: "Black Hat",
     descr: "O gorro Next.js chegou! Esta beldade bordada tem um ajuste confortável que garante que...",
     preço: 80.00,
 },{
-    imgScr: "imagens/mascara.png",
+    imgSrc: "imagens/mascara.png",
     imgAlt: "Mascara Preta",
     categ: "Acessórios",
     nome: "Mask",
     descr: "Esta máscara facial durável é feita de duas camadas de tecido tratado e possui presilhas...",
     preço: 20.00,
 },{
-    imgScr: "imagens/camisetapt.png",
+    imgSrc: "imagens/camisetapt.png",
     imgAlt: "Camiseta Preta",
     categ: "Camisetas",
     nome: "T-Shirt",
     descr: "Esta t-shirt é imprescindível no seu guarda-roupa, combinando o caimento intemporal de...",
     preço: 100.00,
 },{
-    imgScr: "imagens/camisetabr.png",
+    imgSrc: "imagens/camisetabr.png",
     imgAlt: "Camiseta Branca",
     categ: "Camisetas",
     nome: "Short-Sleeve T-Shirt",
     descr: "Agora você encontrou a camiseta básica do seu guarda-roupa. É feito de um mais grosso...",
     preço: 100.00,
 },{
-    imgScr: "imagens/moletom.png",
+    imgSrc: "imagens/moletom.png",
     imgAlt: "Moletom Preto",
     categ: "Camisetas",
     nome: "Champion Packable Jacket",
@@ -43,16 +43,17 @@ const bancoProdutos = [{
 },
 ]
 
+// ATUALIZACAO AUTOMATICA VITRINE COM BANCO DE DADOS FAKE - FINALIZADO
+
 let vitrine = document.getElementById('vitrine')
 
-function createProd(imgScr,imgAlt,categ,nome,descr,preço) {
+function createProd(imgSrc,imgAlt,categ,nome,descr,preço) {
     let novoProd = document.createElement('div')
     novoProd.classList.add('cardProd')
-    novoProd.innerHTML = `<div class="imgProd">
-    <img src=${imgScr} alt=${imgAlt}>
+    novoProd.innerHTML = `<div class="imgProd"><img src=${imgSrc} alt=${imgAlt}>
 </div>
 <div class="infosProd">
-    <div>${categ}</div>
+    <div class="categoria">${categ}</div>
     <h4>${nome}</h4>
     <p>${descr}</p>
     <p class="valor">R$ ${preço}</p>
@@ -62,12 +63,184 @@ function createProd(imgScr,imgAlt,categ,nome,descr,preço) {
 
 vitrine.appendChild(novoProd)
 
+
+
+
 }
+
 
 function atualizarVitrine (){
     bancoProdutos.forEach(function (item){
-        createProd(item.imgScr,item.imgAlt,item.categ,item.nome,item.descr,item.preço)
+        createProd(item.imgSrc,item.imgAlt,item.categ,item.nome,item.descr,item.preço)
     })
 }
 
 atualizarVitrine ()
+
+//FIM ATUALIZACAO AUTOMATICA VITRINE - FINALIZADO
+
+//FILTRAR VITRINE COM BASE NO ITEM DA LISTA DE NAVEGACAO CLICADO -  EM CONSTRUCAO
+
+let itemNavTodos = document.getElementById('todos')
+let itemNavacessorios = document.getElementById('acessorios')
+let itemNavcalcados = document.getElementById('calcados')
+let itemNavcamisetas = document.getElementById('camisetas')
+
+
+// itemNavcamisetas.addEventListener('click',filtroVitrine('camisetas'))
+
+// function filtroVitrine(categoria){
+//     vitrine.innerHTML = ""
+//     bancoProdutos.forEach(function (item){
+    // if(itemNavcamisetas.innerText == bancoProdutos[item].categ)
+    //      createProd(item.imgSrc,item.imgAlt,item.categ,item.nome,item.descr,item.preço)
+//     }
+//     }
+// }
+
+// FIM FILTRAR VITRINE COM BASE NO ITEM DA LISTA DE NAVEGACAO CLICADO -  EM CONSTRUCAO
+
+//FILTRAR VITRINE COM BASE PESQUISA - FINALIZADO
+
+let areaPesquisa = document.getElementById('areaPesquisa')
+let btPesquisar = document.getElementById('btPesquisar')
+
+btPesquisar.addEventListener('click', prodsPesquisados)
+
+function prodsPesquisados(event){
+
+    event.preventDefault();
+
+    let txtPesquisa = areaPesquisa.value.toLowerCase()
+
+    vitrine.innerHTML = ''
+
+    for (let i = 0; i < bancoProdutos.length; i++){
+        if (bancoProdutos[i].nome.toLowerCase().includes(txtPesquisa)){
+            createProd(bancoProdutos[i].imgSrc,bancoProdutos[i].imgAlt,bancoProdutos[i].categ,bancoProdutos[i].nome,bancoProdutos[i].descr,bancoProdutos[i].preço)
+
+        }
+
+    }
+}
+
+//FIM FILTRAR VITRINE COM BASE PESQUISA - FINALIZADO
+
+
+//ADICIONANDO PRODUTOS NO CARRINHO - FINALIZADO
+
+let carrinho = document.getElementById('prodsCarrinho')
+
+const arrayCarrinho = []
+function createItemCarrinho(imgSrc,imgAlt,nome,preço){
+
+    let itemCarrinho = document.createElement('div')
+    itemCarrinho.classList.add('itemCarrinho')
+
+    itemCarrinho.innerHTML = `<div class="imgProdCarrinho">
+    <img src=${imgSrc} alt=${imgAlt}>
+    </div>
+    <div class="infoProdCarrinho">
+    <h4>${nome}</h4><p>${preço}</p>
+    <button class="btRemover">Remover produto</button>
+    </div>`
+
+    arrayCarrinho.push(preço)
+    displayMensagemCarrinhoVazio()
+    carrinho.appendChild(itemCarrinho)
+}
+
+
+let botoesAdicionar = document.getElementsByClassName('btAdicionar')
+
+for( let i = 0; i < botoesAdicionar.length; i++){
+    botoesAdicionar[i].addEventListener("click", addCarrinho)
+}   
+
+
+function addCarrinho(event){
+
+    let produto = event.target.closest(".cardProd")
+    let produtoInfos = event.target.parentElement
+
+    let imgSrc = produto.firstChild.firstChild.getAttribute("src")
+    let imgAlt = produto.firstChild.firstChild.getAttribute("alt")
+    let nome = produtoInfos.childNodes[3].innerText
+    let preço = produtoInfos.childNodes[7].innerText
+
+    createItemCarrinho(imgSrc,imgAlt,nome,preço)
+    infosCarrinho()
+    habilitandoBtsRemover()
+}
+
+// FIM ADICIONANDO PRODUTOS NO CARRINHO - FINALIZADO
+
+//REMOVENDO PRODUTOS DO CARRINHO - FINALIZADO
+
+let botoesRemover = document.getElementsByClassName('btRemover')
+
+function habilitandoBtsRemover(){
+    for( let j = 0; j < botoesRemover.length; j++){
+        botoesRemover[j].addEventListener("click", removerDoCarrinho)
+    }   
+
+}
+
+function removerDoCarrinho(event){
+
+    let atualItemCarrinho = event.target.closest(".itemCarrinho")
+
+   let indexItemRemovido = arrayCarrinho.findIndex( element => element === atualItemCarrinho.childNodes[2].childNodes[2].innerText)
+   arrayCarrinho.splice(indexItemRemovido,1)
+
+   carrinho.removeChild(atualItemCarrinho)
+
+
+    displayMensagemCarrinhoVazio()
+    infosCarrinho()
+}
+//FIM REMOVENDO PRODUTOS DO CARRINHO - FINALIZADO
+
+// CONSTRUINDO AREA COM INFOS DO CARRINHO - FINALIZADO
+
+let resumoCarrinho = document.getElementById('contaCarrinho')
+let quantidadeCarrinho = document.getElementById('quantItens')
+let totalValorCarrinho = document.getElementById('totalValor')
+
+
+function infosCarrinho(){
+    let total = 0
+
+if(arrayCarrinho.length > 0){
+    resumoCarrinho.classList.remove('escondido')
+    quantidadeCarrinho.innerText = arrayCarrinho.length;
+
+    for( let z = 0; z < arrayCarrinho.length; z++){
+
+        total += Number(arrayCarrinho[z].slice(3))
+    }
+    totalValorCarrinho.innerText = `R$ ${total}`
+} else{
+    quantidadeCarrinho.innerText = arrayCarrinho.length;
+    totalValorCarrinho.innerText = `R$ ${total}`
+    resumoCarrinho.classList.add('escondido')
+}
+}
+
+// FIM CONSTRUINDO AREA COM INFOS DO CARRINHO - FINALIZADO
+
+// MOSTRANDO AVISO DE CARRINHO VAZIO - FINALIZADO
+
+function displayMensagemCarrinhoVazio(){
+    
+    let mensagemCarrinhoVazio = document.getElementById('txCarrinhoVazio')
+
+if(arrayCarrinho.length != 0){
+
+    mensagemCarrinhoVazio.classList.add('escondido')
+} else{
+    mensagemCarrinhoVazio.classList.remove('escondido')
+}
+}
+
+// FIM MOSTRANDO AVISO DE CARRINHO VAZIO - FINALIZADO

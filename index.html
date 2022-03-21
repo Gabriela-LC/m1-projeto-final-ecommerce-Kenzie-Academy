@@ -13,86 +13,31 @@
         <h1>Weartake</h1>
         <nav>
             <ul>
-                <li>Todos</li>
-                <li>Acessórios</li>
-                <li>Calçados</li>
-                <li>Camisetas</li>
+                <li id="todos">Todos</li>
+                <li id="acessorios">Acessórios</li>
+                <li id="calcados">Calçados</li>
+                <li id="camisetas">Camisetas</li>
             </ul>
         </nav>
     </header>
 
     <main>
         <div id="vitrine">
-            
-            <!-- <div class="cardProd">
-                <div class="imgProd">
-                    <img src="imagens/moletom.png" alt="Moletom Preto">
-                </div>
-                <div class="infosProd">
-                    <div>Camisetas</div>
-                    <h4>Champion Packable Jacket</h4>
-                    <p>Proteja-se dos elementos com esta jaqueta embalável Champion. Esta jaqueta de poliést...</p>
-                    <p class="valor">R$ 100.00</p>
-                    <button class="btAdicionar">Adicionar ao carrinho
-                    </button>
-                </div>
-            </div> -->
-            
         </div>
         <aside>
             <form>
-                <input type="text" placeholder="Digite aqui sua pesquisa">
-                <button>Pesquisar</button>
+                <input id="areaPesquisa" type="text" placeholder="Digite aqui sua pesquisa">
+                <button id="btPesquisar">Pesquisar</button>
             </form>
             <div id="carrinho">
                 <h2>Carrinho de compras</h2>
                 <div id="prodsCarrinho">
-                    <div id="txCarrinhoVazio" class="escondido">
+                    <div id="txCarrinhoVazio">
                         <h3>Carrinho Vazio</h3>
                         <p>Adicione itens</p>
                     </div>
-                    <div class="itemCarrinho">
-                        <div class="imgProdCarrinho">
-                            <img src="jaqueta.png" alt="Jaqueta Preta">
-                        </div>
-                        <div class="infoProdCarrinho">
-                            <h4>Lightweight Jacket</h4>
-                            <p>R$ 100.00</p>
-                            <button class="btRemover">Remover produto</button>
-                        </div>
-                    </div>
-                    <div class="itemCarrinho">
-                        <div class="imgProdCarrinho">
-                            <img src="jaqueta.png" alt="Jaqueta Preta">
-                        </div>
-                        <div class="infoProdCarrinho">
-                            <h4>Lightweight Jacket</h4>
-                            <p>R$ 100.00</p>
-                            <button class="btRemover">Remover produto</button>
-                        </div>
-                    </div>
-                    <div class="itemCarrinho">
-                        <div class="imgProdCarrinho">
-                            <img src="jaqueta.png" alt="Jaqueta Preta">
-                        </div>
-                        <div class="infoProdCarrinho">
-                            <h4>Lightweight Jacket</h4>
-                            <p>R$ 100.00</p>
-                            <button class="btRemover">Remover produto</button>
-                        </div>
-                    </div>
-                    <div class="itemCarrinho">
-                        <div class="imgProdCarrinho">
-                            <img src="jaqueta.png" alt="Jaqueta Preta">
-                        </div>
-                        <div class="infoProdCarrinho">
-                            <h4>Lightweight Jacket</h4>
-                            <p>R$ 100.00</p>
-                            <button class="btRemover">Remover produto</button>
-                        </div>
-                    </div>
                 </div>
-                <div id="contaCarrinho">
+                <div class="escondido" id="contaCarrinho">
                     <div id="quantCarrinho">
                         <p>Quantidade</p>
                         <p id="quantItens">4</p>

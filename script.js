@@ -63,7 +63,7 @@ function createProd(imgSrc,imgAlt,categ,nome,descr,preço) {
 
 vitrine.appendChild(novoProd)
 
-
+habilitandoBtsAdicionar()
 
 
 }
@@ -79,26 +79,48 @@ atualizarVitrine ()
 
 //FIM ATUALIZACAO AUTOMATICA VITRINE - FINALIZADO
 
-//FILTRAR VITRINE COM BASE NO ITEM DA LISTA DE NAVEGACAO CLICADO -  EM CONSTRUCAO
+//FILTRAR VITRINE COM BASE NO ITEM DA LISTA DE NAVEGACAO CLICADO - FINALIZADO
 
+let itensNav = document.querySelectorAll('li')
 let itemNavTodos = document.getElementById('todos')
 let itemNavacessorios = document.getElementById('acessorios')
 let itemNavcalcados = document.getElementById('calcados')
 let itemNavcamisetas = document.getElementById('camisetas')
 
 
-// itemNavcamisetas.addEventListener('click',filtroVitrine('camisetas'))
+itemNavTodos.addEventListener('click',filtroVitrine)
+itemNavacessorios.addEventListener('click',filtroVitrine)
+itemNavcalcados.addEventListener('click',filtroVitrine)
+itemNavcamisetas.addEventListener('click',filtroVitrine)
 
-// function filtroVitrine(categoria){
-//     vitrine.innerHTML = ""
-//     bancoProdutos.forEach(function (item){
-    // if(itemNavcamisetas.innerText == bancoProdutos[item].categ)
-    //      createProd(item.imgSrc,item.imgAlt,item.categ,item.nome,item.descr,item.preço)
-//     }
-//     }
-// }
 
-// FIM FILTRAR VITRINE COM BASE NO ITEM DA LISTA DE NAVEGACAO CLICADO -  EM CONSTRUCAO
+function filtroVitrine(event){
+
+    let categClicada = event.target
+
+    for( let i = 0; i < itensNav.length; i++){
+        itensNav[i].classList.remove('categoriaClick')
+    }
+    categClicada.classList.add('categoriaClick')
+    vitrine.innerHTML = ""
+
+for (let i = 0; i < bancoProdutos.length; i++){
+    if (bancoProdutos[i].categ === categClicada.innerText){
+        createProd(bancoProdutos[i].imgSrc,bancoProdutos[i].imgAlt,bancoProdutos[i].categ,bancoProdutos[i].nome,bancoProdutos[i].descr,bancoProdutos[i].preço)
+
+    }else if (categClicada.innerText == "Todos"){
+        vitrine.innerHTML = ""
+        atualizarVitrine ()
+    }  
+} if (vitrine.innerHTML === ""){
+        let msgNenhumProd = document.createElement('h2')
+        msgNenhumProd.innerText = "Desculpe, no momento não temos nenhum produto nesta categoria"
+        vitrine.appendChild(msgNenhumProd)
+    }
+    habilitandoBtsAdicionar()
+}
+
+// FIM FILTRAR VITRINE COM BASE NO ITEM DA LISTA DE NAVEGACAO CLICADO - FINALIZADO
 
 //FILTRAR VITRINE COM BASE PESQUISA - FINALIZADO
 
@@ -120,7 +142,6 @@ function prodsPesquisados(event){
             createProd(bancoProdutos[i].imgSrc,bancoProdutos[i].imgAlt,bancoProdutos[i].categ,bancoProdutos[i].nome,bancoProdutos[i].descr,bancoProdutos[i].preço)
 
         }
-
     }
 }
 
@@ -150,13 +171,14 @@ function createItemCarrinho(imgSrc,imgAlt,nome,preço){
     carrinho.appendChild(itemCarrinho)
 }
 
+function habilitandoBtsAdicionar(){
 
 let botoesAdicionar = document.getElementsByClassName('btAdicionar')
 
 for( let i = 0; i < botoesAdicionar.length; i++){
     botoesAdicionar[i].addEventListener("click", addCarrinho)
 }   
-
+}
 
 function addCarrinho(event){
 
